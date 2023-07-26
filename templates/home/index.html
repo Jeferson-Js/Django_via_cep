@@ -1,0 +1,45 @@
+<!-- cep_api/templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consulta CEP</title>
+  </head>
+  <body>
+    <h1>Consulta de CEP</h1>
+    <form id="cep-form">
+      <input type="text" name="cep" placeholder="Digite o CEP" />
+      <button type="submit">Consultar</button>
+    </form>
+    <div id="result">
+      <!-- Aqui serão exibidos os dados do CEP -->
+    </div>
+
+    <script>
+      const form = document.getElementById("cep-form");
+      const resultDiv = document.getElementById("result");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        fetch(`/get_cep/?${new URLSearchParams(formData).toString()}`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.erro) {
+              resultDiv.innerHTML = "CEP não encontrado";
+            } else {
+              resultDiv.innerHTML = `
+                            <p>CEP: ${data.cep}</p>
+                            <p>Logradouro: ${data.logradouro}</p>
+                            <p>Bairro: ${data.bairro}</p>
+                            <p>Cidade/UF: ${data.localidade}/${data.uf}</p>
+                        `;
+            }
+            form.reset();
+          })
+          .catch((error) => console.error("Erro na requisição:", error));
+      });
+    </script>
+  </body>
+</html>
