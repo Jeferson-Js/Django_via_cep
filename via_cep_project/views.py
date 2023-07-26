@@ -10,5 +10,6 @@ def get_cep(request):
         url = f'https://viacep.com.br/ws/{cep}/json/'
         response = requests.get(url)
         data = response.json()
+        show_result = not data.get('erro')
         return JsonResponse(data)
     return render(request, 'home/index.html')

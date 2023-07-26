@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Django via cep{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'js/main.js' %}" defer></script>
+  </head>
+  <header class="flex">
+    <nav class="w-full h-20 flex justify-center items-center bg-green-500 shadow-lg fixed">
+      <span class="flex-col justify-center items-center">
+        <h1 class="text-white lg:text-lg md:text-base text-sm font-semibold animate-pulse pl-10 pt-2"><a href="{% url 'get_cep' %}">Django via cep</a></h1>
+        <h1 class="text-white font-semibold text-2xl mb-4">Consulte seu cep</h1>
+      </span>
+    </nav>
+  </header>
+  <body class="bg-gray-100">
+    {% block conteudo %} {% endblock %}
+    <footer class="flex justify-center items-center bg-green-500 w-full h-16">
+        <p class="lg:text-lg md:text-base text-sm text-white font-semibold animate-bounce">All rights reservd Oliveira.js &copy; June 2023</p>
+    </footer>
+  </body>
+</html>

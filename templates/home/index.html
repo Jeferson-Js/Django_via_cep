@@ -1,45 +1,25 @@
-<!-- cep_api/templates/index.html -->
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Consulta CEP</title>
-  </head>
-  <body>
-    <h1>Consulta de CEP</h1>
-    <form id="cep-form">
-      <input type="text" name="cep" placeholder="Digite o CEP" />
-      <button type="submit">Consultar</button>
+{% extends 'base.html' %} {% load static %} {% block conteudo %}
+<section class="min-h-screen flex justify-center items-center">
+  <div class="flex-col">
+    <form id="cep-form" class="flex justify-center items-center gap-1">
+      {% csrf_token %}
+      <input
+        type="text"
+        name="cep"
+        placeholder="Digite o CEP"
+        required
+        class="py-1.5 w-44 focus:outline-red-200 pl-3 rounded-l-full shadow-lg"
+      />
+      <button
+        type="submit"
+        class="bg-green-400 hover:bg-green-500 duration-700 font-semibold lg:text-lg md:text-base text-sm text-white rounded-r-full shadow-lg py-1.5 lg:py-1 md:py-1 px-6"
+      >
+        Consultar
+      </button>
     </form>
-    <div id="result">
+    <div id="result" class="bg-white text-center p-3 rounded-lg shadow-lg mt-4">
       <!-- Aqui serão exibidos os dados do CEP -->
     </div>
-
-    <script>
-      const form = document.getElementById("cep-form");
-      const resultDiv = document.getElementById("result");
-
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-        fetch(`/get_cep/?${new URLSearchParams(formData).toString()}`)
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.erro) {
-              resultDiv.innerHTML = "CEP não encontrado";
-            } else {
-              resultDiv.innerHTML = `
-                            <p>CEP: ${data.cep}</p>
-                            <p>Logradouro: ${data.logradouro}</p>
-                            <p>Bairro: ${data.bairro}</p>
-                            <p>Cidade/UF: ${data.localidade}/${data.uf}</p>
-                        `;
-            }
-            form.reset();
-          })
-          .catch((error) => console.error("Erro na requisição:", error));
-      });
-    </script>
-  </body>
-</html>
+  </div>
+</section>
+{% endblock %}
