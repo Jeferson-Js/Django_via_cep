@@ -1,25 +1,25 @@
-<!-- home/index.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Consulta de CEP</title>
-</head>
-<body>
-    <h1>Consulta de CEP</h1>
-    <form action="" method="GET">
-        <input type="text" name="cep" placeholder="Digite o CEP">
-        <input type="submit" value="Consultar">
-    </form>
-    <br>
-    {% if data %}
-        <h2>Resultado</h2>
-        <p>CEP: {{ data.cep }}</p>
-        <p>Logradouro: {{ data.logradouro }}</p>
-        <p>Bairro: {{ data.bairro }}</p>
-        <p>Cidade: {{ data.localidade }}</p>
-        <p>UF: {{ data.uf }}</p>
-    {% elif erro %}
-        <p>CEP não encontrado.</p>
-    {% endif %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block conteudo %}
+    <section class="min-h-screen flex justify-center items-center">
+      <div class="flex-col">
+        <form action="" method="GET">
+          {% csrf_token %}
+          <input type="text" name="cep" placeholder="Digite o CEP" class="py-1 w-44 focus:outline-red-200 rounded-lg pl-2 ml-1">
+        <input type="submit" value="Consultar" class="bg-green-500 hover:bg-green-400 cursor-pointer duration-700 py-1 px-6 text-white font-semibold rounded-md ">
+      </form>
+      <br>
+      {% if data %}
+      <h2>Resultado</h2>
+      <p>CEP: {{ data.cep }}</p>
+      <p>Logradouro: {{ data.logradouro }}</p>
+      <p>Bairro: {{ data.bairro }}</p>
+      <p>Cidade: {{ data.localidade }}</p>
+      <p>UF: {{ data.uf }}</p>
+      {% elif erro %}
+      <p>CEP não encontrado.</p>
+      {% endif %}
+    </div>
+    </section>
+    {% endblock %}
+    
